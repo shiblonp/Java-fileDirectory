@@ -1,6 +1,5 @@
 package com.pluralsight.filesystem;
-
-import java.io.File;
+import static java.nio.file.StandardCopyOption.*;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -10,6 +9,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
+import java.nio.file.Files;
+
+
 
 //Created on 2/4 to demonstrate how Java supports FileSystems
 public class Main {
@@ -26,8 +28,8 @@ public class Main {
         //try with resource because whenever we open the file system, it needs to be closed
         //the path specifies a zip file in the default sys
 
-	    try(FileSystem zipFs = openZip(Paths.get("myData.zip"))){
-
+        try(FileSystem zipFs = openZip(Paths.get("myData.zip"))){
+            copyToZip(zipFs);
         }catch(Exception e){
             System.out.println(e.getClass().getSimpleName() + " - " + e.getMessage());
         }
@@ -48,6 +50,9 @@ public class Main {
         return zipFs;
     }
     private static void copyToZip(FileSystem zipFs) throws IOException{
-
+        Path sourceFile = Paths.get("file1.txt");
+        Path destFile = zipFs.getPath("/file1Copied.txt");
+        Files.copy(sourceFile,destFile, REPLACE_EXISTING);
     }
 }
+
