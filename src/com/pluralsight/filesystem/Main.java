@@ -57,6 +57,7 @@ public class Main {
         Files.copy(sourceFile,destFile, REPLACE_EXISTING);
     }
     //Methods to show that I can write to the filesystem directly from the program
+    //The first method shows how to do it by creating the buffered writer first
     private static void writeToFileInZip1(FileSystem zipFs, String [] data) throws IOException
     {
         try(BufferedWriter writer = Files.newBufferedWriter(zipFs.getPath("/newFile1.txt")))
